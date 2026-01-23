@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PDF ちょき 1.0</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <img
+      src="./images/icon-64.png"
+      alt="PDFちょき アイコン"
+      class="app-icon"
+    />
+    <h1 id="appTitle">PDF ちょき 1.0</h1>
+  </header>
+
+  <main>
+    <hr class="divider">
+    <section id="languageArea"></section>
+    <section id="controlArea"></section>
+    <section id="statusArea"></section>
+
+    <!-- ★ 進捗バー表示エリア -->
+    <section id="progressArea"></section>
+  </main>
+
+  <!-- PDF解析ライブラリ（UMD） -->
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+  <!-- 依存順厳守 -->
+  <script src="./js/select_language.js"></script>
+  <script src="./js/select_file_folder.js"></script>
+  <script src="./js/folder_output.js"></script>
+  <script src="./js/split_logic.js"></script>
+  <script src="./js/ui.js"></script>
+  <script src="./js/main.js"></script>
+
+</body>
+</html>
+<footer>PDF ちょき 1.0</footer>
