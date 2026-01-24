@@ -1,25 +1,27 @@
-// main.js
-(async () => {
-  // 1. 翻訳CSVを読み込む
-  await window.Language.init();
+// main.js（iOS実機対応・確定版）
+document.addEventListener("DOMContentLoaded", () => {
+  (async () => {
+    // 1. 翻訳CSVを読み込む
+    await window.Language.init();
 
-  // 2. UIを描画
-  window.UI.render();
+    // 2. UIを描画
+    window.UI.render();
 
-  // 3. OS判定
-  const noticeKey = window.OSDetect?.getNoticeKey();
-  if (!noticeKey) return;
+    // 3. OS判定
+    const noticeKey = window.OSDetect?.getNoticeKey();
+    if (!noticeKey) return;
 
-  // 4. 翻訳取得
-  const message = window.Language.t(noticeKey);
+    // 4. 翻訳取得
+    const message = window.Language.t(noticeKey);
+    if (!message || message === noticeKey) return;
 
-  // 翻訳が無い・キーのままなら表示しない
-  if (!message || message === noticeKey) return;
+    // 5. フッターに表示
+    const footer = document.getElementById("osNotice");
+    if (!footer) return;
 
-  // 5. フッターに表示
-  const footer = document.getElementById("osNotice");
-  if (!footer) return;
+    footer.textContent = message;
+    footer.classList.remove("hidden");
+  })();
+});
 
-  footer.textContent = message;
-  footer.classList.remove("hidden");
-})();
+
