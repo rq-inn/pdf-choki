@@ -6,3 +6,22 @@ MB4,Start,スタート,開始
 MB5,Please wait a moment,しばらくお待ちください,請稍等片刻
 MB6,Done,完了しました,完畢
 MB7,Save destination:,保存先:,保存目標:
+OS_IOS_NOTICE,"""This device (iOS) restricts file operations required for PDF splitting.
+
+We recommend using a PC (Windows / Mac).""","""この端末（iOS）では
+PDFの分割処理に必要な
+ファイル操作が制限されています。
+
+PC（Windows / Mac）での
+ご利用をおすすめします。""","""這個裝置（iOS）限制了 PDF 分割所需的檔案操作。
+
+建議使用電腦（Windows / Mac）。"""
+OS_ANDROID_NOTICE,"""On this device, processing may be unstable.
+
+If it does not work, please use a PC.""","""この端末では
+処理が不安定になる場合があります。
+
+動作しない場合は
+PCをご利用ください。""","""在此裝置上，處理可能不穩定。
+
+若無法運作，請使用電腦。"""
