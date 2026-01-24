@@ -3,5 +3,9 @@
 (async () => {
   await window.Language.init();
   window.UI.render();
-  window.OSDetect.showNoticeIfNeeded();
+  const noticeKey = window.OSDetect?.getNoticeKey();
+  if (noticeKey) {
+    const message = window.Language.t(noticeKey);
+    alert(message);
+  }
 })();
