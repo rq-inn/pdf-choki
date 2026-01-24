@@ -65,7 +65,7 @@ Chrome / Edge で開くと
 
 ## 🔹 公開URL
 
-👉 https://（あなたのGitHub Pages URL）
+👉 https://rq-inn-mobu.github.io/pdf-choki/
 
 ---
 
