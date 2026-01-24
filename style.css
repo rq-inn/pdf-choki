@@ -182,3 +182,40 @@ button:disabled {
   color: #777;
   cursor: not-allowed;
 }
+.os-notice {
+  margin-top: 1rem;
+  padding: 0.8em;
+  font-size: 0.9em;
+  line-height: 1.5;
+  background: #fff3cd;
+  color: #664d03;
+  border: 1px solid #ffecb5;
+  border-radius: 6px;
+}
+
+.os-notice.hidden {
+  display: none;
+}
+
+.os-notice {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.75em 1em;
+
+  background: #fff3cd;
+  color: #333;
+  font-size: 0.9em;
+  text-align: center;
+
+  border-top: 1px solid #e0c97f;
+  z-index: 1000;
+
+  /* iPhone セーフエリア対応 */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.os-notice.hidden {
+  display: none;
+}
