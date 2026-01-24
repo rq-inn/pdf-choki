@@ -1,8 +1,11 @@
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   margin: 0;
-  padding: 1rem;
   background: #f5f5f5;
+}
+
+main {
+  padding: 1rem;
 }
 
 header {
@@ -193,9 +196,6 @@ button:disabled {
   border-radius: 6px;
 }
 
-.os-notice.hidden {
-  display: none;
-}
 
 .os-notice {
   position: fixed;
@@ -217,5 +217,51 @@ button:disabled {
 }
 
 .os-notice.hidden {
+  display: none;
+}
+/* ===== OS通知は常に表示可能にする（footer 初期display対策） ===== */
+#osNotice {
+  display: block;           /* ← 決定打 */
+}
+
+/* hidden がある時だけ非表示 */
+#osNotice.hidden {
+  display: none;
+}
+
+/* ===== OS通知 表示制御（最終確定版） ===== */
+
+/* footer 要素の初期 display 問題を強制的に解除 */
+#osNotice {
+  display: block;
+}
+
+/* hidden が付いているときだけ非表示 */
+#osNotice.hidden {
+  display: none;
+}
+
+/* ===== OS通知（iPhone Safari 最終確定版） ===== */
+#osNotice {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: block;
+  z-index: 9999;
+
+  background: #fff3cd;
+  color: #333;
+  font-size: 0.9em;
+  text-align: center;
+
+  border-top: 1px solid #e0c97f;
+
+  padding: 0.75em 1em;
+  padding-bottom: calc(0.75em + env(safe-area-inset-bottom));
+}
+
+#osNotice.hidden {
   display: none;
 }
