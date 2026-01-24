@@ -50,7 +50,7 @@ PDFファイルを **10MB以下・ページ単位** に安全に分割する、
 - Android（PWA）
 - Windows / macOS / Linux
 
-※ Safari は一部機能制限があります。
+※ Safari では動作しません。
 
 ---
 
@@ -93,3 +93,4 @@ MIT License
 ---
 
 ✂️ **切るだけ。迷わない。PDF ちょき。**
+
