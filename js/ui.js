@@ -7,20 +7,6 @@ window.UI = {
     this.renderLanguageSelect();
     this.renderControls();
     this.renderStatus(); 
-    this.showOSNoticeIfNeeded();
-  },
-
-  // ★ ここに置く（render の外）
-  showOSNoticeIfNeeded() {
-    const noticeKey = window.OSDetect?.getNoticeKey();
-    if (!noticeKey) return;
-
-    const message = window.Language.t(noticeKey);
-
-    // 翻訳がまだなら出さない（保険）
-    if (!message || message === noticeKey) return;
-
-    alert(message);
   },
 
   // --- Language Select ---

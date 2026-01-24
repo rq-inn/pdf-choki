@@ -3,7 +3,7 @@
   await window.Language.init();   // 翻訳CSVを読み終える
   window.UI.render();             // UI描画
 
-  // ★ ここでOS判定＆ダイアログ
+  // ★ OS判定＆注意ダイアログ（ここだけ）
   const noticeKey = window.OSDetect?.getNoticeKey();
   if (!noticeKey) return;
 
