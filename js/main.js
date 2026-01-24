@@ -1,20 +1,16 @@
 // main.js
-
 (async () => {
-  // ① 言語CSVを完全ロード
-  await window.Language.init();
+  await window.Language.init();   // 翻訳CSVを読み終える
+  window.UI.render();             // UI描画
 
-  // ② UIを描画
-  window.UI.render();
-
-  // ③ ここで OS 判定 → 表示
+  // ★ ここでOS判定＆ダイアログ
   const noticeKey = window.OSDetect?.getNoticeKey();
   if (!noticeKey) return;
 
   const message = window.Language.t(noticeKey);
 
-  // 翻訳が取れているときだけ表示
-  if (message && message !== noticeKey) {
-    alert(message);
-  }
+  // 翻訳が未ロード・キー未変換なら出さない
+  if (!message || message === noticeKey) return;
+
+  alert(message);
 })();
