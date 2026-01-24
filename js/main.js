@@ -1,16 +1,25 @@
 // main.js
 (async () => {
-  await window.Language.init();   // 翻訳CSVを読み終える
-  window.UI.render();             // UI描画
+  // 1. 翻訳CSVを読み込む
+  await window.Language.init();
 
-  // ★ OS判定＆注意ダイアログ（ここだけ）
+  // 2. UIを描画
+  window.UI.render();
+
+  // 3. OS判定
   const noticeKey = window.OSDetect?.getNoticeKey();
   if (!noticeKey) return;
 
+  // 4. 翻訳取得
   const message = window.Language.t(noticeKey);
 
-  // 翻訳が未ロード・キー未変換なら出さない
+  // 翻訳が無い・キーのままなら表示しない
   if (!message || message === noticeKey) return;
 
-  alert(message);
+  // 5. フッターに表示
+  const footer = document.getElementById("osNotice");
+  if (!footer) return;
+
+  footer.textContent = message;
+  footer.classList.remove("hidden");
 })();
