@@ -1,4 +1,6 @@
 // main.js（iOS実機対応・確定版）
+console.log("MAIN_JS_LOADED");
+
 document.addEventListener("DOMContentLoaded", () => {
   (async () => {
     // 1. 翻訳CSVを読み込む
