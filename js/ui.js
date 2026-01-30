@@ -147,6 +147,10 @@ window.UI = {
           await window.PDFLogic.buildChunksBySize(
             window.FileSelector.pdfFile
           );
+        } catch (e) {
+          const key = e?.message || "MB8";
+          const msg = window.Language.t(key);
+          UI.showError(msg);
         } finally {
           this.isRunning = false;
           this.renderControls();
@@ -180,4 +184,20 @@ UI.renderProgress = function (percent) {
   area.appendChild(line);
 };
 
+UI.showError = function (message) {
+  const area = document.getElementById("statusArea");
+  area.innerHTML = "";
+
+  const box = document.createElement("div");
+  box.className = "box";
+  box.style.borderColor = "#e53935";
+  box.style.background = "#fff5f5";
+
+  const p = document.createElement("p");
+  p.textContent = message;
+  p.style.color = "#b71c1c";
+
+  box.appendChild(p);
+  area.appendChild(box);
+};
 
