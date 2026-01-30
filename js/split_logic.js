@@ -4,9 +4,12 @@ window.PDFLogic = {
 
   // ===== Stage 4-2 =====
   async buildChunksBySize(file) {
-    const TEN_MB = 10 * 1024 * 1024;
-    const MAX_PAGES = 30;
-    const STEP = 2;
+    const PAGE_LIMIT  = 10 * 1024 * 1024;   // 1ページ上限（10MB）
+    const CHUNK_LIMIT = 30 * 1024 * 1024;   // 分割PDF上限（30MB）
+
+    const MAX_PAGES = 50;
+
+    const STEP = 1; // ★ 重要：必ず 1
 
     const srcBuffer = await file.arrayBuffer();
     const srcPdf = await PDFLib.PDFDocument.load(srcBuffer);
@@ -17,6 +20,8 @@ window.PDFLogic = {
     const results = [];
 
     while (currentPage <= totalPages) {
+
+      // 初期は「できるだけ大きい偶数ページ」
       let tryPages = Math.min(MAX_PAGES, totalPages - currentPage + 1);
       if (tryPages % 2 !== 0) tryPages -= 1;
 
@@ -24,13 +29,21 @@ window.PDFLogic = {
 
       while (tryPages >= 1) {
         const start = currentPage;
-        const end = currentPage + tryPages - 1;
+        const end   = currentPage + tryPages - 1;
+
+        // ===== 1ページ単体チェック（最終防衛線）=====
+        if (tryPages === 1) {
+          const singleBytes = await this.buildPdfBytes(srcPdf, start, start);
+          if (singleBytes.length > PAGE_LIMIT) {
+            throw new Error("MB8");
+          }
+        }
 
         console.log("BUILD", start, end);
 
         const bytes = await this.buildPdfBytes(srcPdf, start, end);
 
-        if (bytes.length <= TEN_MB) {
+        if (bytes.length <= CHUNK_LIMIT) {
           await window.FolderOutput.savePdf(bytes, chunkIndex);
 
           results.push({
@@ -50,7 +63,7 @@ window.PDFLogic = {
           break;
         }
 
-        // ★ ページ数を減らして再試行
+        // ★ サイズ超過 → ページ数を 1 減らして再試行
         tryPages -= STEP;
       }
 
