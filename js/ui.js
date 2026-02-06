@@ -68,27 +68,24 @@ window.UI = {
         if (e.name !== "AbortError") console.error(e);
       }
     });
+
     // ===== 読込ファイル枠 =====
     const pdfBox = document.createElement("div");
     pdfBox.className = "box";
 
     pdfBox.appendChild(btnPDF);
 
-    // --- 読込ファイル名（常に1行確保） ---
     const fileName = document.createElement("div");
     fileName.className = "box-sub";
 
     if (window.FileSelector?.pdfFile) {
       fileName.textContent = window.FileSelector.pdfFile.name;
     } else {
-      fileName.innerHTML = "&nbsp;"; // ← 空行確保
+      fileName.innerHTML = "&nbsp;";
     }
 
     pdfBox.appendChild(fileName);
-
-
     area.appendChild(pdfBox);
-
 
     // ===== 保存先枠 =====
     const folderBox = document.createElement("div");
@@ -103,13 +100,11 @@ window.UI = {
       folderName.textContent =
         `${window.Language.t("MB7")} ${window.FileSelector.outputDir.name}`;
     } else {
-      folderName.innerHTML = "&nbsp;"; // ← 空行確保
+      folderName.innerHTML = "&nbsp;";
     }
 
     folderBox.appendChild(folderName);
-
     area.appendChild(folderBox);
-
   },
 
   // --- Status ---
@@ -125,49 +120,63 @@ window.UI = {
       return;
     }
 
-      // --- Start ボタン（常設） ---
-      const btnRun = document.createElement("button");
-      btnRun.textContent = window.Language.t("MB4");
+    // --- Start ボタン ---
+    const btnRun = document.createElement("button");
+    btnRun.textContent = window.Language.t("MB4");
 
-      const canStart =
-        window.FileSelector?.pdfFile &&
-        window.FileSelector?.outputDir &&
-        !this.isRunning;
+    const canStart =
+      window.FileSelector?.pdfFile &&
+      window.FileSelector?.outputDir &&
+      !this.isRunning;
 
-      btnRun.disabled = !canStart;
+    btnRun.disabled = !canStart;
 
-      btnRun.addEventListener("click", async () => {
-        if (!canStart) return;
+    btnRun.addEventListener("click", async () => {
+      if (!canStart) return;
 
-        this.isRunning = true;
+      this.isRunning = true;
+      this.renderControls();
+      UI.renderProgress(0);
+
+      try {
+        await window.PDFLogic.buildChunksBySize(
+          window.FileSelector.pdfFile
+        );
+      } catch (e) {
+        const key = e?.message || "MB8";
+        const msg = window.Language.t(key);
+        UI.showError(msg);
+      } finally {
+        this.isRunning = false;
         this.renderControls();
-        UI.renderProgress(0);
+      }
+    });
 
-        try {
-          await window.PDFLogic.buildChunksBySize(
-            window.FileSelector.pdfFile
-          );
-        } catch (e) {
-          const key = e?.message || "MB8";
-          const msg = window.Language.t(key);
-          UI.showError(msg);
-        } finally {
-          this.isRunning = false;
-          this.renderControls();
-        }
-      });
+    area.appendChild(btnRun);
 
-      area.appendChild(btnRun);
-    }
-    };
+    // ===== 追加：アプリ説明メッセージ =====
+    const infoBox = document.createElement("div");
+    infoBox.className = "box";
+    infoBox.style.marginTop = "12px";
+
+    const p1 = document.createElement("p");
+    p1.textContent = window.Language.t("MB9");
+
+    const p2 = document.createElement("p");
+    p2.textContent = window.Language.t("MB10");
+
+    infoBox.appendChild(p1);
+    infoBox.appendChild(p2);
+
+    area.appendChild(infoBox);
+  }
+};
+
 UI.renderProgress = function (percent) {
   const area = document.getElementById("progressArea");
   area.innerHTML = "";
 
-  // 0〜100 にクランプ
   const p = Math.max(0, Math.min(100, Math.floor(percent)));
-
-  // バーは10マス固定（10%で1マス）
   const filled = Math.floor(p / 10);
   const empty = 10 - filled;
 
@@ -200,4 +209,3 @@ UI.showError = function (message) {
   box.appendChild(p);
   area.appendChild(box);
 };
-
